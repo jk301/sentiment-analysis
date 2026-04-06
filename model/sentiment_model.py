@@ -36,6 +36,7 @@ class SentimentLSTM(nn.Module):
         out, _ = self.lstm(emb)
         pooled = out.mean(dim=1)
         return self.fc(pooled)
+    
 
 # stores the model and vocab in memory so we don't reload them on every request
 _vocab = None
@@ -56,6 +57,7 @@ def _build_vocab():
         vocab.add(w)
     return vocab
 
+
 # loads the model once and reuses it for all requests
 def _get_model():
     global _vocab, _model
@@ -64,6 +66,26 @@ def _get_model():
         _model = SentimentLSTM(vocab_size=_vocab.size)
         _model.eval()
     return _vocab, _model
+
+
+# generates a plain summary based on the scores
+def generate_summary(label, scores):
+    top_score = scores[label]
+    sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    
+    # determine strength based on confidence
+    if top_score >= 70:
+        strength = "clearly"
+    elif top_score >= 50:
+        strength = "moderately"
+    else:
+        strength = "mixed feedback, leaning"
+    
+    # build the score string
+    score_str = ", ".join(f"{v}% {k.lower()}" for k, v in sorted_scores)
+    
+    return f"{score_str} — {strength} {label.lower()} feedback"
+
 
 # takes a string, runs it through the model, returns label and scores
 def analyze_sentiment(text):
@@ -78,5 +100,9 @@ def analyze_sentiment(text):
     label = LABELS[int(np.argmax(probs))]
     scores = {LABELS[i]: round(float(probs[i]) * 100, 1) for i in range(3)}
 
-    return {"label": label, "scores": scores}
+    return {
+        "label": label,
+        "scores": scores,
+        "summary": generate_summary(label, scores)
+    }
     
