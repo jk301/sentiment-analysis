@@ -58,12 +58,25 @@ def _build_vocab():
     return vocab
 
 
-# loads the model once and reuses it for all requests
+# loads trained weights if available, otherwise falls back to random weights
 def _get_model():
     global _vocab, _model
     if _model is None:
         _vocab = _build_vocab()
         _model = SentimentLSTM(vocab_size=_vocab.size)
+        
+        try:
+            checkpoint = torch.load("model/trained_model.pt", weights_only=True)
+            # rebuild vocab from checkpoint
+            _vocab.word2idx = checkpoint["word2idx"]
+            _vocab._next = max(checkpoint["word2idx"].values()) + 1
+            # reload model with correct vocab size
+            _model = SentimentLSTM(vocab_size=_vocab.size)
+            _model.load_state_dict(checkpoint["model_state"])
+            print("Loaded trained model weights")
+        except FileNotFoundError:
+            print("No trained weights found, using random weights")
+        
         _model.eval()
     return _vocab, _model
 
