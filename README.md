@@ -7,17 +7,19 @@ A customer feedback sentiment analysis API built with FastAPI and PyTorch.
 - **Pretrained Model**: Cardiff RoBERTa (3-class sentiment)
 
 ## Project Structure
-
+```
 sentiment-analysis/
 ├── main.py                 # FastAPI app entry point
 ├── train.py                # Model training script
 ├── requirements.txt
+├── README.md
 ├── model/
 │   ├── sentiment_model.py  # LSTM model + inference
 │   └── pretrained_model.py # HuggingFace Cardiff model
 └── routes/
-├── sentiment.py        # LSTM endpoints
-└── pretrained.py       # Pretrained endpoints
+    ├── sentiment.py        # LSTM endpoints
+    └── pretrained.py       # Pretrained endpoints
+```
 
 ## Setup
 
