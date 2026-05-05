@@ -43,29 +43,36 @@ sentiment-analysis/
 ## Setup
 
 ### 1. Clone the repository
-
+```bash
 git clone https://github.com/YOUR_USERNAME/sentiment-analysis.git
+```
+```bash
 cd sentiment-analysis
-
+```
 ---
 
 ## Backend Setup (FastAPI)
 
 ### 2. Create virtual environment
 
+```bash
 python3 -m venv venv
 source venv/bin/activate        # Linux/macOS
 venv\Scripts\activate           # Windows
+```
 
 ### 3. Install dependencies
-
+```bash
 pip install -r requirements.txt
+```
 
 ---
 
 ### 4. Train the LSTM model (optional)
 
+```bash
 PYTHONPATH=. python train.py
+```
 
 This will:
 - download Yelp dataset
@@ -76,24 +83,33 @@ This will:
 
 ### 5. Start the backend server
 
+```bash
 PYTHONPATH=. uvicorn main:app --reload --port 8000
+```
 
-API:
+API: 
+
 http://localhost:8000
 
 Docs:
+
 http://localhost:8000/docs
+
 
 ---
 
 ## Frontend Setup (React)
 
+```bash
 cd frontend
 npm install
 npm run dev
+```
 
 Frontend runs at:
+```bash
 http://localhost:5173
+```
 
 ---
 
@@ -118,14 +134,16 @@ POST   | /api/v1/analyze/pretrained/bulk | Multiple texts — RoBERTa
 
 ## Example Request
 
+```bash
 curl -X POST http://localhost:8000/api/v1/analyze \
   -H "Content-Type: application/json" \
   -d '{"text": "this product is absolutely amazing"}'
+```
 
 ---
 
 ## Example Response
-
+```bash
 {
   "label": "Positive",
   "scores": {
@@ -135,3 +153,4 @@ curl -X POST http://localhost:8000/api/v1/analyze \
   },
   "summary": "100.0% positive, 0.0% neutral, 0.0% negative — clearly positive feedback"
 }
+```
