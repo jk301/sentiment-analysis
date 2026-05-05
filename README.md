@@ -14,6 +14,7 @@ A customer feedback sentiment analysis app built with FastAPI and PyTorch, featu
 
 ## Project Structure
 
+```
 sentiment-analysis/
 ├── main.py
 ├── train.py
@@ -28,7 +29,7 @@ sentiment-analysis/
 └── frontend/
     ├── src/
     └── package.json
-
+```
 ---
 
 ## Requirements
