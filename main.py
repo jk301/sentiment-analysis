@@ -13,9 +13,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(sentiment_router, prefix="/api/v1")
-app.include_router(pretrained_router, prefix="/api/v1")
-
 # registers the sentiment routes under /api/v1
 app.include_router(sentiment_router, prefix="/api/v1")
 
