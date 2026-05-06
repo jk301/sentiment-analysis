@@ -53,7 +53,7 @@ cd sentiment-analysis
 
 ## Backend Setup (FastAPI)
 
-### 2. Create virtual environment
+### 2. Create virtual environment (optional)
 
 ```bash
 python3 -m venv venv
@@ -68,7 +68,7 @@ pip install -r requirements.txt
 
 ---
 
-### 4. Train the LSTM model (optional)
+### 4. Train the LSTM model (optional kinda)
 
 ```bash
 PYTHONPATH=. python train.py
@@ -83,9 +83,15 @@ This will:
 
 ### 5. Start the backend server
 
+For Linux
 ```bash
 PYTHONPATH=. uvicorn main:app --reload --port 8000
 ```
+For Windows
+```bash
+set PYTHONPATH=. && uvicorn main:app --reload --port 8000
+```
+added windows cmd for convenience.
 
 API: 
 
