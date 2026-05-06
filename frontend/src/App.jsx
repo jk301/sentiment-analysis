@@ -5,11 +5,18 @@ function App() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [loadingMessage, setLoadingMessage] = useState('')
 
   const analyze = async (endpoint) => {
     setLoading(true)
     setError(null)
     setResult(null)
+
+    if (endpoint.includes('pretrained')) {
+      setLoadingMessage('Loading model (first time may take a while)...')
+    } else {
+      setLoadingMessage('Analyzing...')
+    }
 
     try {
       const response = await fetch(`http://localhost:8000/api/v1/${endpoint}`, {
@@ -18,7 +25,6 @@ function App() {
         body: JSON.stringify({ text })
       })
 
-      // handle non-OK responses
       if (!response.ok) {
         throw new Error('API error')
       }
@@ -30,6 +36,7 @@ function App() {
       setError('Could not reach backend. Is it running?')
     } finally {
       setLoading(false)
+      setLoadingMessage('')
     }
   }
 
@@ -55,7 +62,7 @@ function App() {
           </button>
         </div>
 
-        {loading && <p className="status">Analyzing...</p>}
+        {loading && <p className="status">{loadingMessage}</p>}
         {error && <p className="error">{error}</p>}
       </div>
 
