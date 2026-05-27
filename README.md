@@ -1,6 +1,6 @@
 # Sentiment Analysis API
 
-A customer feedback sentiment analysis app built with FastAPI and PyTorch, featuring both a custom LSTM model and a pretrained RoBERTa model.
+Developed a customer feedback sentiment analysis application using FastAPI and PyTorch, integrating both a custom LSTM model and a pretrained RoBERTa model for accurate sentiment classification.
 
 ---
 
